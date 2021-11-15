@@ -1,0 +1,4 @@
+docs
+main/node_modules/*
+pollquery-b/node_modules/*
+pollquery-b/config/*

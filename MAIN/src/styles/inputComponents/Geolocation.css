@@ -1,0 +1,18 @@
+.geo-container{
+  display:flex;
+  flex-direction: row;
+  flex-wrap:nowrap;
+  justify-content: space-evenly;
+}
+
+
+button {
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+button:hover {background: #eee;}

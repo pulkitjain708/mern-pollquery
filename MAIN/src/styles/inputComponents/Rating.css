@@ -1,0 +1,18 @@
+.rating-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    justify-content: space-evenly;
+}
+
+.col{
+    text-align: center;
+    max-height:5%;
+    width:5%;
+    font-size: xx-large;
+    padding:10px;
+    border-style:solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 20px;
+}
