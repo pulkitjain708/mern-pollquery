@@ -42,6 +42,9 @@ let FormWindow = (props) => {
                          <button onClick={e=>{
                              navigate(`formReport/${f._id}`);
                          }}>View Reports</button>
+                         <button onClick={e=>{
+                             navigate(`datatable/${f._id}`);
+                         }}>View Data Table</button>
                         </Card>
                         )
                 }

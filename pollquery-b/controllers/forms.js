@@ -78,6 +78,16 @@ let forms = {
            }
         }
 
+ },
+ customizedDatatable:async(req,res)=>{
+     let {formId} = req.body;
+        let results = await response.find({form_id:formId},{response:1})
+        return res.send(results)
+ },
+ deleteResponse:async(req,res)=>{
+     let {id} =req.body;
+        await response.remove({_id:id})
+        return res.send({status:"deleted"});
  }
 }
 
