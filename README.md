@@ -13,8 +13,8 @@ Could also facilitate querying and generating reports
 ## Authors
 
 - [@pulkitjain708](https://github.com/pulkitjain708)
-- yash 
-- deepak
+<!-- - yash 
+- deepak -->
 
 
 ## Installation
