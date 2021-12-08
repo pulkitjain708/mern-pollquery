@@ -1,5 +1,5 @@
 
-![Logo](https://raw.githubusercontent.com/pulkitjain708/pollquery/main/pollquery-b/logo.png)
+![Logo](https://raw.githubusercontent.com/pulkitjain708/pollquery/main/backend/logo.png)
 
 
 # PollQuery
