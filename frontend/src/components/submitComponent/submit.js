@@ -2,6 +2,7 @@ import { useParams,useNavigate } from "react-router-dom";
 import {useEffect,useState} from 'react';
 import AppBar from "./AppBar";
 import MainForm from "./MainForm";
+import services from "../../services";
 
 let Submit = props => {
     let {mail,formLink} = useParams();
@@ -10,14 +11,10 @@ let Submit = props => {
         description:"Form Description"
         });
     // console.log(formComp)
-    useEffect(()=>{
-        fetch('http://localhost:3030/FrmSrv/formBelongsToUser',{
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({mail,formLink})
-          })
-          .then(res=>res.json())
+    useEffect(async()=>{
+        await services.formBelongsToUser({mail,formLink})
           .then(data=>{
+              console.log(data,"DATA")
               if(data.status===false)
               {
                   alert("You are not in the Recepient List");

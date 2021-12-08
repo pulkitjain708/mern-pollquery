@@ -14,7 +14,7 @@ let Interface = props =>{
             <label for="unique"><b>Question</b></label>
             <input type="text" placeholder="Enter Question"
             onChange={e=>questionState(old=>e.target.value)}
-            name="unique" required></input>
+            name="unique" value={question} required></input>
             </div>
             <div>
             <label for="select"><b>Component</b></label> <br/>
@@ -32,7 +32,8 @@ let Interface = props =>{
                 </div>
                 <div>
                     <button
-                    onClick={e=>addToList(question,selection)}
+                    disabled={question===""}
+                    onClick={e=>{addToList(question,selection);questionState("")}}
                     >Add</button>
                     </div>
             </div>

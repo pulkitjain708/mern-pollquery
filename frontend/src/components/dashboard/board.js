@@ -4,12 +4,20 @@ import Main from '../../components/FormGenerator/Main'
 import FormWindow  from './formWindows';
 import Description from "../FormGenerator/Description";
 import FormReport from "./formReport";
-import { BrowserRouter as Router , Route , Routes , useParams } from "react-router-dom";
+import { BrowserRouter as Router , Route , Routes , useParams,useNavigate } from "react-router-dom";
 import {useEffect,useState} from 'react';
 import DatatableView from "./DataTable"
+import session from '../../session';
+import PageNotFound from '../PageNotFound'
 
 let Dashboard = props => {
     let {mail} = useParams();
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!session.checkSession(mail))
+        navigate('/')
+    }
+    ,[mail])
     let revertScreen = (cb) => {
         cb();
     }
@@ -19,6 +27,7 @@ let Dashboard = props => {
         <AppBar mail={mail}/>
         <Routes>
         <Route exact path="" element={<FormWindow/>}/>
+        <Route path="*" element={<PageNotFound/>}/>
             <Route  exact path="newForm" element={<Main revertScreen={revertScreen}/>}/>
             <Route  exact path="description" element={<Description />}/>
             <Route  exact path="formReport/:formId" element={<FormReport />}/>

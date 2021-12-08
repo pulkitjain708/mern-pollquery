@@ -2,6 +2,7 @@ import DataTable from 'react-data-table-component';
 import {useParams} from 'react-router-dom'
 import {useEffect,useState,useRef} from 'react'
 import "../../styles/badge.css"
+import services from '../../services';
 
 
 const ExpandedComponent= ({ data }) => {
@@ -68,23 +69,15 @@ let DatatableView = (props) => {
     }
 
 
-    let deleteResponse = (id) =>{
+    let deleteResponse = async (id) =>{
         if(window.confirm("Sure to Delete Response")){
-            fetch('http://localhost:3030/FrmSrv/deleteResponse',{
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({id})
-          })
+            await services.deleteResponse({id})
+            .then(data=>alert(data.status))
         }
     }
    
-    useEffect(()=>{
-        fetch('http://localhost:3030/FrmSrv/datatable',{
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({formId})
-          })
-          .then(res=>res.json())
+    useEffect(async ()=>{
+        await services.datatable({formId})
           .then(res=>{
               if(res.length===0){
                   colState(null)

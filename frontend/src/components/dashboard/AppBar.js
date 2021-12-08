@@ -1,13 +1,14 @@
 import logo from "../../logo.png"
 import Card from "../containers/card"
 import "../../styles/dashboard.css"
-
 import {
-  Link,useParams
+  Link,useParams,useNavigate
 } from 'react-router-dom';
+import session from '../../session'
 
 let AppBar = (props) => {
   let {mail} = useParams();
+  const navigate = useNavigate();
   return (
     <div class="AppBar">
       <Card>
@@ -21,7 +22,9 @@ let AppBar = (props) => {
          <Link to={`/dashboard/${mail}/newForm`}>New Form</Link>
           </li>
           <li>
-            <div class="imageTag">
+            <div 
+            onClick={()=>{session.clearSession();navigate('/');}}
+            class="imageTag">
               {mail[0]}
               </div>
           </li>

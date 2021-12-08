@@ -1,6 +1,8 @@
 import React from "react";
 import loginImg from "./logo.png";
 import { useNavigate } from 'react-router-dom';
+import services  from "../../services";
+import session from "../../session";
 
  class Login extends React.Component {
   constructor(props) {
@@ -11,23 +13,18 @@ import { useNavigate } from 'react-router-dom';
     }
   }
   
-  url= 'http://127.0.0.1:3030/login'
-  sendLogin=()=>{
-    fetch(this.url,{
-      method:"POST",
-      headers:{'Content-Type': 'application/json'},
-      body:JSON.stringify(this.state)
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      if(data.error){
-        alert(data.error)
-      }
-      if(data.message){
-        alert(data.message)
+  sendLogin= async ()=>{
+    if(session.checkSession(this.state.mail))
+        return this.props.navigate(`/dashboard/${this.state.mail}`)
+        else {
+  let {bool,msg} = await services.login(this.state)
+     if(bool && msg==='Logged In'){
+        session.setSession(this.state.mail);
         this.props.navigate(`/dashboard/${this.state.mail}`)
       }
-    })
+      else
+      alert(msg)
+    }   
   }
 
   render() {

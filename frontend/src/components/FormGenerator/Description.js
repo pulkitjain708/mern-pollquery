@@ -12,6 +12,10 @@ let Description = props => {
     let descRef=useRef();
     let mailsRef=useRef();
     let send = () => {
+        if(nameRef.current.value === "" || descRef.current.value==="" || mailsRef.current.value.split(',').length===1 ){
+            alert('Fill in Fields')
+            return 
+        }
         let details = {}
         details['author']=mail
         details['name']=nameRef.current.value;

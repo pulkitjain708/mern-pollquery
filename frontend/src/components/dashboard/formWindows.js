@@ -1,30 +1,20 @@
 import Card from "../containers/card"
 import {useState,useEffect} from 'react';
 import { BrowserRouter as Router , Route , Routes , useParams,useNavigate } from "react-router-dom";
+import services from "../../services";
+
 let FormWindow = (props) => {
     const navigate=useNavigate();
-    let url=`http://127.0.0.1:3030/FrmSrv/fetchByMail`
-    let url2=`http://127.0.0.1:3030/FrmSrv/getResponses`
     let {mail} = useParams();
     let [forms,formState]=useState(null);
-    useEffect(()=>{
-        fetch(url,{
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({mail})
-          })
-          .then(res=>res.json())
+    useEffect(async ()=>{
+            await services.fetchByMail({mail})
           .then(data=>formState(data.data))
           return ()=>formState(null)
     },[])
 
-    let fetchResponses = id => {
-        fetch(url2,{
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body:JSON.stringify({id})
-          })
-          .then(res=>res.blob())
+    let fetchResponses = async id => {
+            await services.getResponses({id})
           .then(blob=> {var file = window.URL.createObjectURL(blob);
           window.location.assign(file);})
     }

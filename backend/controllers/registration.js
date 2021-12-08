@@ -44,6 +44,8 @@ exports.registerController= async (req,res)=>{
 }
 
 exports.verifyTokenController= async (req,res)=>{
+    try
+    {
     let {mail,otp,token} = req.body;
     let arrDateStamp=new Date();
     let dta = await register.findOne({mail,otp,token}); 
@@ -81,4 +83,10 @@ exports.verifyTokenController= async (req,res)=>{
             'error':"Time expired , Try Again.."
         })
     }
+    }
+    catch(e)
+    {
+       console.log('Registration Error : ',e) 
+    }
+
 }

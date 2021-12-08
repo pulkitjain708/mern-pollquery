@@ -1,5 +1,6 @@
 import React from "react";
 import loginImg from "./logo.png";
+import services from "../../services";
 
 export class Register extends React.Component {
   constructor(props) {
@@ -11,37 +12,46 @@ export class Register extends React.Component {
     };
   }
 
-  registrationLink='http://127.0.0.1:3030/register'
-  verifyTokenLink='http://127.0.0.1:3030/register/verifyToken'
+  // registrationLink='http://127.0.0.1:3030/register'
+  // verifyTokenLink='http://127.0.0.1:3030/register/verifyToken'
 
-   getToken=()=>{
-     fetch(this.registrationLink,{
-        method:"POST",
-        headers:{'Content-Type': 'application/json'},
-        body:JSON.stringify({mail:this.state.mail})
-     })
-     .then(res=>res.json())
-     .then(data=>this.setState({...data}))
+   getToken=async ()=>{
+            await services.register({mail:this.state.mail})
+            .then(data=>this.setState({...data}))
+  //    fetch(this.registrationLink,{
+  //       method:"POST",
+  //       headers:{'Content-Type': 'application/json'},
+  //       body:JSON.stringify({mail:this.state.mail})
+  //    })
+  //    .then(res=>res.json())
+  //    .then(data=>this.setState({...data}))
    }
 
-    register=()=>{
-      fetch(this.verifyTokenLink,{
-        method:"POST",
-        headers:{'Content-Type': 'application/json'},
-        body:JSON.stringify(this.state)
-     })
-     .then(res=>res.json())
-     .then(data=>{
-      if(data.message)
-      {
-        alert(data.message);
-      // console.log(this.props)
-        this.props.showLogin(this.state.mail);
-      }
-      else if(data.error){
-        alert(data.error);
-      }
-      })
+    register= async ()=>{
+        await services.verifyToken(this.state)
+        .then(res=>{
+          if(res.error)
+          alert(res.error)
+          else if(res.message)
+          alert(res.message)
+        })
+    //   fetch(this.verifyTokenLink,{
+    //     method:"POST",
+    //     headers:{'Content-Type': 'application/json'},
+    //     body:JSON.stringify(this.state)
+    //  })
+    //  .then(res=>res.json())
+    //  .then(data=>{
+    //   if(data.message)
+    //   {
+    //     alert(data.message);
+    //   // console.log(this.props)
+    //     this.props.showLogin(this.state.mail);
+    //   }
+    //   else if(data.error){
+    //     alert(data.error);
+    //   }
+    //   })
     }
 
   render() {

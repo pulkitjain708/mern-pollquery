@@ -1,6 +1,7 @@
 import FormFieldMapper from "../FormGenerator/aggregated"
 import Card from "../containers/card"
 import {useNavigate,useParams} from "react-router-dom";
+import services from "../../services";
 
 let MainForm = ({id,data}) => {
     // console.log(id,data)
@@ -27,7 +28,7 @@ let MainForm = ({id,data}) => {
         );
     })}
 
-        let handleSubmission = e => {
+        let handleSubmission = async e => {
             e.preventDefault();
             let formData={}
             formData['mail']=mail;
@@ -38,21 +39,12 @@ let MainForm = ({id,data}) => {
                 else
                 formData[element.name]=element.value;
             }
-            fetch("http://localhost:3030/FrmSrv/submitFormResult",{
-                method:"POST",
-                headers:{'Content-Type': 'application/json'},
-                body:JSON.stringify(formData)
-             })
-             .then(res=>res.json())
+            await services.submitForm(formData)
              .then(data=>{
                  if(data.status)
                  alert(data.message)
              })
-             fetch("http://localhost:3030/FrmSrv/submitHTML",{
-                method:"POST",
-                headers:{'Content-Type': 'application/json'},
-                body:JSON.stringify({mail,html:document.getElementsByTagName('html')[0].innerHTML})
-             })
+             await services.submitHTML({mail,html:document.getElementsByTagName('html')[0].innerHTML})
         }
 
     return (

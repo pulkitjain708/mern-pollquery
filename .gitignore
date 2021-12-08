@@ -1,4 +1,4 @@
 docs
-main/node_modules/*
-pollquery-b/node_modules/*
-pollquery-b/config/*
+frontend/node_modules/*
+backend/node_modules/*
+backend/config/mail.json
