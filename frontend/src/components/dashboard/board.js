@@ -11,23 +11,24 @@ import session from '../../session';
 import PageNotFound from '../PageNotFound'
 
 let Dashboard = props => {
+    
     let {mail} = useParams();
     const navigate = useNavigate();
+    const [search,searchState]=useState(undefined);
     useEffect(()=>{
         if(!session.checkSession(mail))
         navigate('/')
-    }
-    ,[mail])
+    },[mail])
     let revertScreen = (cb) => {
         cb();
     }
     return(
         // <Router>
         <Card>
-        <AppBar mail={mail}/>
+        <AppBar mail={mail} search={search} searchState={searchState} />
         <Routes>
-        <Route exact path="" element={<FormWindow/>}/>
-        <Route path="*" element={<PageNotFound/>}/>
+            <Route exact path="" element={<FormWindow search={search} />}/>
+            <Route path="*" element={<PageNotFound/>}/>
             <Route  exact path="newForm" element={<Main revertScreen={revertScreen}/>}/>
             <Route  exact path="description" element={<Description />}/>
             <Route  exact path="formReport/:formId" element={<FormReport />}/>

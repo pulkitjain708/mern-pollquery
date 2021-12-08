@@ -1,17 +1,30 @@
 import Card from "../containers/card"
-import {useState,useEffect} from 'react';
+import {useState,useEffect,useMemo} from 'react';
 import { BrowserRouter as Router , Route , Routes , useParams,useNavigate } from "react-router-dom";
 import services from "../../services";
 
-let FormWindow = (props) => {
+let FormWindow = ({search}) => {
     const navigate=useNavigate();
     let {mail} = useParams();
     let [forms,formState]=useState(null);
+    let [searchedForms,searchedFromState]=useState(null);
+    let [finalForms,finalFormsState]=useState(null);
     useEffect(async ()=>{
             await services.fetchByMail({mail})
           .then(data=>formState(data.data))
           return ()=>formState(null)
     },[])
+  const  perform=()=>{
+ if(search!==undefined)
+    {
+        searchedFromState(forms.filter(form=>form.name.includes(search) || form.description.includes(search)))
+    }
+    if(searchedForms!==null)
+        finalFormsState(searchedForms)
+    else
+    finalFormsState(forms)
+    }
+   useMemo(()=>perform(),[search])
 
     let fetchResponses = async id => {
             await services.getResponses({id})
@@ -22,9 +35,9 @@ let FormWindow = (props) => {
     let sx={textAlign:"center"}
     return (
             <div>
-                {!forms || forms.length==0  ?<h1 style={sx}>No Forms Available</h1>:<h1 style={sx}>Saved Forms</h1>}
+                {!finalForms || finalForms.length==0  ?<h1 style={sx}>No Forms Available</h1>:<h1 style={sx}>Saved Forms</h1>}
                 {
-                  forms && forms.map(f=>
+                  finalForms && finalForms.map(f=>
                         <Card key={f._id}>
                          <p> Title : {f.name}</p>
                          <p>Description : {f.description}</p> 

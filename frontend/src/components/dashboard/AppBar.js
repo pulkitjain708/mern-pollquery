@@ -5,19 +5,25 @@ import {
   Link,useParams,useNavigate
 } from 'react-router-dom';
 import session from '../../session'
-
-let AppBar = (props) => {
+import {useState} from 'react';
+ 
+let AppBar = ({searchState,search}) => {
   let {mail} = useParams();
   const navigate = useNavigate();
+  
   return (
     <div class="AppBar">
       <Card>
       <div>
         <ul>
           <li><img src={logo} height="50px" width="50px" /></li>
-          <li><input 
-            // style={{borderStyle:"solid",borderRadius:"10%"}}
-            placeholder="search" style={{width:"500px"}} type="text"/></li>
+          <li>
+            <input 
+            value={search}
+            onChange={e=>searchState(e.target.value)}
+            placeholder="Search" style={{width:"500px"}}
+            type="text"/>
+            </li>
          <li>
          <Link to={`/dashboard/${mail}/newForm`}>New Form</Link>
           </li>
